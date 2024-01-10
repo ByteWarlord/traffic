@@ -3,7 +3,6 @@
  * 更新日期：2024.01.10
  * 版本：1.1英文
 */
-
 (async () => {
   let args = getArgs();
   let info = await getDataInfo(args.url);
@@ -20,14 +19,14 @@
   let total = info.total;
 	
   let content = [
-		`USED ${bytesToSize(used)}｜PERCENT ${proportion(used,total)}`];
+		`USED ${bytesToSize(used)}｜RATIO ${proportion(used,total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ PERMANENT       PERCENT ${proportion(used,total)}`);
+    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜REMAIN ${expireDaysLeft} ${eday}`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜SURPLUS ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -39,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`EXPEIRE ${formatTime(args.expire || info.expire)}`);
+      content.push(`EXPIRE ${formatTime(args.expire || info.expire)}`);
     }
   }
 
