@@ -7,6 +7,8 @@
 (async () => {
   let args = getArgs();
   let info = await getDataInfo(args.url);
+  
+  // 如果没有信息，则直接结束
   if (!info) return $done();
 
   let resetDayLeft = getRemainingDays(parseInt(args["reset_day"]));
@@ -18,14 +20,14 @@
   let total = info.total;
 	
   let content = [
-		`USED ${bytesToSize(used)}｜PRO ${proportion(used,total)}`];
+		`USED ${bytesToSize(used)}｜PERCENT ${proportion(used,total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PRO ${proportion(used,total)}`);
+    content.push(`⏰ PERMANENT       PERCENT ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜OVERDUE ${expireDaysLeft} ${eday}`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜REMAIN ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -37,7 +39,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`EXPIRE ${formatTime(args.expire || info.expire)}`);
+      content.push(`EXPEIRE ${formatTime(args.expire || info.expire)}`);
     }
   }
 
