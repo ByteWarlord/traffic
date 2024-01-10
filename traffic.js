@@ -166,8 +166,8 @@ function formatTime(time) {
   let dateObj = new Date(time);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
-	let month1 = month<9?"0"+month:month;
-	
+	console.log("嗯嗯嗯额");
+
   let day = dateObj.getDate();
 	let day1 = day<9?"0"+day:day;
   return year + "Year" + month1+ "Month" + day1+"Day";
