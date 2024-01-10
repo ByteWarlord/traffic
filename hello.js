@@ -1,40 +1,29 @@
-(async () => {
-  let args = getArgs();
-  let info = await getDataInfo(args.url);
-  
-  // 如果没有信息，则直接结束
-  if (!info) return $done();
+/*
+ * 由@mieqq编写
+ * 原脚本地址：https://raw.githubusercontent.com/mieqq/mieqq/master/sub_info_panel.js
+ * 由@Rabbit-Spec修改
+ * 更新日期：2022.08.24
+ * 版本：1.5
+*/
 
-  let resetDayLeft = getRemainingDays(parseInt(args["reset_day"]));
-  let expireDaysLeft = getExpireDaysLeft(args.expire || info.expire);
-  let afterday = args["reset_day"] < 2 ? "Day":"Days";
- let eday = expireDaysLeft<2?"Day":"Days";
- 
+let args = getArgs();
+
+(async () => {
+  let info = await getDataInfo(args.url);
+  if (!info) $done();
+  let resetDayLeft = getRmainingDays(parseInt(args["reset_day"]));
+
   let used = info.download + info.upload;
   let total = info.total;
- 
-  let content = [
-  `已用 ${bytesToSize(used)}｜占比 ${proportion(used,total)}`];
-  // 判断是否为不限时套餐
-  if (!resetDayLeft && !expireDaysLeft) {
-    let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
-  } else {
-    if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} `+afterday+`｜剩余 ${expireDaysLeft} ${eday}`);
-    } else if (resetDayLeft) {
-  content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
-      //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
-    } else if (expireDaysLeft) {
-     content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
-   //content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
-    }
-  
-    // 到期时间（日期）显示
-    if (expireDaysLeft) {
-   let expireDays = 
-      content.push(`到期 ${formatTime(args.expire || info.expire)}`);
-    }
+  let expire = args.expire || info.expire;
+  let content = [`用量：${bytesToSize(used)} | ${bytesToSize(total)}`];
+
+  if (resetDayLeft) {
+    content.push(`重置：剩余${resetDayLeft}天`);
+  }
+  if (expire && expire !== "false") {
+    if (/^[\d.]+$/.test(expire)) expire *= 1000;
+    content.push(`到期：${formatTime(expire)}`);
   }
 
   let now = new Date();
@@ -42,12 +31,12 @@
   let minutes = now.getMinutes();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
-  //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
+
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}`,
-  content: content.join("\n"),
-    icon: args.icon || "timelapse",
-    "icon-color": args.color || "#16AAF4",
+    title: `${args.title} | ${hour}:${minutes}`,
+    content: content.join("\n"),
+    icon: args.icon || "airplane.circle",
+    "icon-color": args.color || "#007aff",
   });
 })();
 
@@ -60,14 +49,11 @@ function getArgs() {
   );
 }
 
-function proportion(used, total){
- return (Math.round(used/total*10000)/100.00 + " %");
-}
-
 function getUserInfo(url) {
+  let method = args.method || "head";
   let request = { headers: { "User-Agent": "Quantumult%20X" }, url };
   return new Promise((resolve, reject) =>
-    $httpClient.get(request, (err, resp) => {
+    $httpClient[method](request, (err, resp) => {
       if (err != null) {
         reject(err);
         return;
@@ -76,7 +62,9 @@ function getUserInfo(url) {
         reject(resp.status);
         return;
       }
-      let header = Object.keys(resp.headers).find((key) => key.toLowerCase() === "subscription-userinfo");
+      let header = Object.keys(resp.headers).find(
+        (key) => key.toLowerCase() === "subscription-userinfo"
+      );
       if (header) {
         resolve(resp.headers[header]);
         return;
@@ -103,67 +91,36 @@ async function getDataInfo(url) {
   );
 }
 
-function getRemainingDays(resetDay) {
-  if (!resetDay  resetDay < 1  resetDay > 31) return;
+function getRmainingDays(resetDay) {
+  if (!resetDay) return;
 
   let now = new Date();
   let today = now.getDate();
   let month = now.getMonth();
   let year = now.getFullYear();
-
-  // 计算当前月份和下个月份的天数
-  let daysInThisMonth = new Date(year, month + 1, 0).getDate();
-  let daysInNextMonth = new Date(year, month + 2, 0).getDate();
-
-  // 如果重置日大于当前月份的天数，则在当月的最后一天重置
-  resetDay = Math.min(resetDay, daysInThisMonth);
+  let daysInMonth;
 
   if (resetDay > today) {
-    // 如果重置日在本月内
-    return resetDay - today;
+    daysInMonth = 0;
   } else {
-    // 如果重置日在下个月，确保不超过下个月的天数
-    resetDay = Math.min(resetDay, daysInNextMonth);
-    return daysInThisMonth - today + resetDay;
-  }
-}
-
-function getExpireDaysLeft(expire) {
-  if (!expire) return;
-
-  let now = new Date().getTime();
-  let expireTime;
-
-  // 检查是否为时间戳
-  if (/^[\d.]+$/.test(expire)) {
-    expireTime = parseInt(expire) * 1000;
-  } else {
-    // 尝试解析YYYY-MM-DD格式的日期
-    expireTime = new Date(expire).getTime();
+    daysInMonth = new Date(year, month + 1, 0).getDate();
   }
 
-     let daysLeft = Math.ceil((expireTime - now) / (1000 * 60 * 60 * 24));
-  return daysLeft > 0 ? daysLeft : null;
+  return daysInMonth - today + resetDay;
 }
 
 function bytesToSize(bytes) {
-if (bytes === 0) return "0B";
+  if (bytes === 0) return "0B";
   let k = 1024;
-  let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let i = Math.floor(Math.log(bytes) / Math.log(k));
   return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
 }
 
 function formatTime(time) {
-  // 检查时间戳是否为秒单位，如果是，则转换为毫秒
-  if (time < 1000000000000) time *= 1000;
-
   let dateObj = new Date(time);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
- let month1 = month<9?"0"+month:month;
- 
   let day = dateObj.getDate();
- let day1 = day<9?"0"+day:day;
-  return year + " 年 " + month1+ " 月 " + day1+" 日";
+  return year + "年" + month + "月" + day + "日";
 }
