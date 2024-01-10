@@ -167,7 +167,6 @@ function formatTime(time) {
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
 	let month1 = month<9?"0"+month:month;
-	
   let day = dateObj.getDate();
 	let day1 = day<9?"0"+day:day;
   //return year + " 年 " + month1+ " 月 " + day1+" 日";
