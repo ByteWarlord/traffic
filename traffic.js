@@ -164,11 +164,12 @@ function formatTime(time) {
   if (time < 1000000000000) time *= 1000;
 
   let dateObj = new Date(time);
+	console.log("恩恩额"+dateObj);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
-	console.log("嗯嗯嗯额");
-
+	let month1 = month<9?"0"+month:month;
+	
   let day = dateObj.getDate();
 	let day1 = day<9?"0"+day:day;
-  return year + "Year" + month1+ "Month" + day1+"Day";
+  return year + " 年 " + month1+ " 月 " + day1+" 日";
 }
