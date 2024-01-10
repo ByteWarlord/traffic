@@ -25,7 +25,7 @@
     content.push(`⏰ 不限时套餐       PRO ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜SURPLUS ${expireDaysLeft} ${eday}`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜OVERDUE ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -37,7 +37,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`到期 ${formatTime(args.expire || info.expire)}`);
+      content.push(`EXPIRE ${formatTime(args.expire || info.expire)}`);
     }
   }
 
