@@ -23,10 +23,10 @@
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
+    content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜剩余 ${expireDaysLeft} ${eday}`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜EXPIRE ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -38,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`EXPIRE ${formatTime(args.expire || info.expire)}`);
+      content.push(`DATE ${formatTime(args.expire || info.expire)}`);
     }
   }
 
