@@ -14,16 +14,17 @@
   let expireDaysLeft = getExpireDaysLeft(args.expire || info.expire);
   let used = info.download + info.upload;
   let total = info.total;
-	
   let content = [
 		`已用 ${bytesToSize(used)}｜占比 ${proportion(used,total)}`];
   // 判断是否为不限时套餐
+	
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
     content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} 天     `+`｜剩余 ${expireDaysLeft} 天`);
+	    
+      content.push(`重置 ${resetDayLeft} 天     `+(resetDayLeft>9?"  ":"")+`｜剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
 		content.push(`占比    ${proportion(used,total)}  🌸 重置 ${resetDayLeft} `+" 天");
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
