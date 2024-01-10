@@ -12,9 +12,6 @@
 
   let resetDayLeft = getRemainingDays(parseInt(args["reset_day"]));
   let expireDaysLeft = getExpireDaysLeft(args.expire || info.expire);
-  let afterday = args["reset_day"] < 2 ? "Day":"Days";
-	let eday = expireDaysLeft<2?"Day":"Days";
-	
   let used = info.download + info.upload;
   let total = info.total;
 	
@@ -23,15 +20,15 @@
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐`);
+    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} `+afterday+`｜剩余 ${expireDaysLeft} ${eday}`);
+      content.push(`重置 ${resetDayLeft} 天     `+`｜剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
-		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
+		content.push(`占比    ${proportion(used,total)}  🌸 重置 ${resetDayLeft} `+" 天");
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
     } else if (expireDaysLeft) {
-     content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
+     content.push(`占比    ${proportion(used,total)}  🌸 重置 ${resetDayLeft} `+" 天");
 			//content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
     }
 		
@@ -47,9 +44,8 @@
   let minutes = now.getMinutes();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
-  //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}`,
+    title:`${args.title} - ${bytesToSize(total)}｜😬 ${hour}:${minutes}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
@@ -163,5 +159,5 @@ function formatTime(time) {
   // 检查时间戳是否为秒单位，如果是，则转换为毫秒
   if (time < 1000000000000) time *= 1000;
   let dateObj = new Date(time);
-	return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'full' }).format(dateObj) +"";
+return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'full' }).format(dateObj)+"";
 }
