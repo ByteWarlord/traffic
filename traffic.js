@@ -38,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`到期 ${formatTime(args.expire || info.expire)}`);
+      content.push(`EXPIRE ${formatTime(args.expire || info.expire)}  🍋`);
     }
   }
 
@@ -170,5 +170,5 @@ function formatTime(time) {
 	
   let day = dateObj.getDate();
 	let day1 = day<9?"0"+day:day;
-  return year + " 年 " + month1+ " 月 " + day1+" 日  🌸";
+  return year + " 年 " + month1+ " 月 " + day1+" 日";
 }
