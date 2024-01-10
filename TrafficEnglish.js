@@ -38,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`DATE ${formatTime(args.expire || info.expire)}`);
+      content.push(`DATE ${formatTime(args.expire || info.expire)} Serendipity`);
     }
   }
 
@@ -47,7 +47,6 @@
   let minutes = now.getMinutes();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
-  //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
   $done({
     title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}`,
 		content: content.join("\n"),
