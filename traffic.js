@@ -49,7 +49,7 @@
   minutes = minutes > 9 ? minutes : "0" + minutes;
   //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}`,
+    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
