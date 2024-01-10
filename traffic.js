@@ -170,5 +170,5 @@ function formatTime(time) {
 	
   let day = dateObj.getDate();
 	let day1 = day<9?"0"+day:day;
-  return year + " 年 " + month1+ " 月 " + day1+" 日";
+  return year + " 年 " + month1+ " 月 " + day1+" 日  🌸";
 }
