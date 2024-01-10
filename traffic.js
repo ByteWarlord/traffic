@@ -20,11 +20,10 @@
 	
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
+    content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-	    
-      content.push(`重置 ${resetDayLeft} 天     `+(resetDayLeft>9?"  ":"")+`｜剩余 ${expireDaysLeft} 天`);
+      content.push(`重置 ${resetDayLeft} 天     `+(resetDayLeft>=10?"":"  ")+`｜剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
 		content.push(`占比    ${proportion(used,total)}  🌸 重置 ${resetDayLeft} `+" 天");
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -36,7 +35,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`到期 ${formatTime(args.expire || info.expire)}Serendipity`);
+      content.push(`到期 ${formatTime(args.expire || info.expire)} Hello`);
     }
   }
 
