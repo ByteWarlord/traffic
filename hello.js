@@ -1,7 +1,7 @@
 /*
  * 由@hellokitty9988编写
- * 更新日期：2024.01.10
- * 版本：1.1英文
+ * 更新日期：2024.01.11
+ * 版本：1.1
 */
 (async () => {
   let args = getArgs();
@@ -23,10 +23,10 @@
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
+    content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜SURPLUS ${expireDaysLeft} ${eday}`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜EXPIRE ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -38,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`EXPIRE ${formatTime(args.expire || info.expire)}`);
+      content.push(`DATE ${formatTime(args.expire || info.expire)}`);
     }
   }
 
@@ -49,7 +49,7 @@
   minutes = minutes > 9 ? minutes : "0" + minutes;
   //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}`,
+    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
@@ -164,11 +164,18 @@ function formatTime(time) {
   if (time < 1000000000000) time *= 1000;
 
   let dateObj = new Date(time);
+
+	console.log("你好吗？");
+
+		console.log(dateObj);
+	console.log("好啊？");
+
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
 	let month1 = month<9?"0"+month:month;
 	
   let day = dateObj.getDate();
 	let day1 = day<9?"0"+day:day;
-  return year + " 年 " + month1+ " 月 " + day1+" 日";
+  //return year + " 年 " + month1+ " 月 " + day1+" 日";
+	return new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(now)+"";
 }
