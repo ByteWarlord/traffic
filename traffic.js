@@ -3,7 +3,6 @@
  * 更新日期：2024.01.10
  * 版本：1.1
 */
-
 (async () => {
   let args = getArgs();
   let info = await getDataInfo(args.url);
