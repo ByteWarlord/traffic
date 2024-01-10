@@ -1,14 +1,12 @@
 /*
  * 由@hellokitty9988编写
  * 更新日期：2024.01.10
- * 版本：1.1
+ * 版本：1.1英文
 */
 
 (async () => {
   let args = getArgs();
   let info = await getDataInfo(args.url);
-  
-  // 如果没有信息，则直接结束
   if (!info) return $done();
 
   let resetDayLeft = getRemainingDays(parseInt(args["reset_day"]));
@@ -20,14 +18,14 @@
   let total = info.total;
 	
   let content = [
-		`已用 ${bytesToSize(used)}｜占比 ${proportion(used,total)}`];
+		`USED ${bytesToSize(used)}｜PRO ${proportion(used,total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
+    content.push(`⏰ 不限时套餐       PRO ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} `+afterday+`｜剩余 ${expireDaysLeft} ${eday}`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜SURPLUS ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
