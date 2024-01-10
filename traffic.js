@@ -164,7 +164,6 @@ function formatTime(time) {
   if (time < 1000000000000) time *= 1000;
 
   let dateObj = new Date(time);
-	console.log("恩恩额"+dateObj);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
 	let month1 = month<9?"0"+month:month;
