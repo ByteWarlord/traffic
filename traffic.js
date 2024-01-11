@@ -3,7 +3,18 @@
  * 更新日期：2024.01.11
  * 版本：1.1
 */
+(async () => {
+  let args = getArgs();
+  let info = await getDataInfo(args.url);
+  
+  // 如果没有信息，则直接结束
+  if (!info) return $done();
 
+  let resetDayLeft = getRemainingDays(parseInt(args["reset_day"]));
+  let expireDaysLeft = getExpireDaysLeft(args.expire || info.expire);
+  let afterday = args["reset_day"] < 2 ? "Day":"Days";
+	let eday = expireDaysLeft<2?"Day":"Days";
+	
   let used = info.download + info.upload;
   let total = info.total;
 	
@@ -27,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`到期 ${formatTime(args.expire || info.expire)}`);
+      content.push(`Expire ${formatTime(args.expire || info.expire)}`);
     }
   }
 
@@ -37,7 +48,7 @@
 	let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
-  //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
+
   $done({
     title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
