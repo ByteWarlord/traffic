@@ -35,7 +35,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`到期 ${formatTime(args.expire || info.expire)} Hello`);
+      content.push(`到期 ${formatTime(args.expire || info.expire)}`);
     }
   }
 
@@ -45,7 +45,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜😬 ${hour}:${minutes}`,
+    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
