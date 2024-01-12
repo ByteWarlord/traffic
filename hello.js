@@ -19,14 +19,14 @@
   let total = info.total;
 	
   let content = [
-		`USED ${bytesToSize(used)}｜RATIO ${proportion(used,total)}`];
+		`已用 ${bytesToSize(used)}｜占比 ${proportion(used,total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐`);
+    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜EXPIRE ${expireDaysLeft} ${eday}`);
+      content.push(`重置 ${resetDayLeft} 天     `+(resetDayLeft>=10?"":"   ")+`｜剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -38,18 +38,19 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`DATE ${formatTime(args.expire || info.expire)}`);
+      content.push(`🌼 ${formatTime(args.expire || info.expire)}`);
     }
   }
 
   let now = new Date();
   let hour = now.getHours();
   let minutes = now.getMinutes();
+	let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
-  //let text1 = resetDayLeft>0?"  🫧RESET："+ resetDayLeft+" "+afterday:"";
+
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}`,
+    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
@@ -162,20 +163,6 @@ function bytesToSize(bytes) {
 function formatTime(time) {
   // 检查时间戳是否为秒单位，如果是，则转换为毫秒
   if (time < 1000000000000) time *= 1000;
-
-  let dateObj = new Date(time);
-
-	console.log("你好吗？");
-
-		console.log(dateObj);
-	console.log("好啊？");
-
-  let year = dateObj.getFullYear();
-  let month = dateObj.getMonth() + 1;
-	let month1 = month<9?"0"+month:month;
-	
-  let day = dateObj.getDate();
-	let day1 = day<9?"0"+day:day;
-  //return year + " 年 " + month1+ " 月 " + day1+" 日";
-	return new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(now)+"";
+let date = new Date(time);
+return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
 }
