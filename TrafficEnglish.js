@@ -45,10 +45,11 @@
   let now = new Date();
   let hour = now.getHours();
   let minutes = now.getMinutes();
+		let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}`,
+    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
@@ -162,5 +163,5 @@ function formatTime(time) {
   // 检查时间戳是否为秒单位，如果是，则转换为毫秒
   if (time < 1000000000000) time *= 1000;
   let dateObj = new Date(time);
-	return new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(dateObj) +"";
+	return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(dateObj);
 }
