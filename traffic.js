@@ -49,10 +49,10 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}:${seconds}`,
+    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
-    icon: "tag"||args.icon,
-    "icon-color": "#9370DB"||args.color,
+    icon: args.icon||"tag",
+    "icon-color": args.color||"#9370DB",
   });
 })();
 
