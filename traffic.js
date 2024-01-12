@@ -19,14 +19,14 @@
   let total = info.total;
 	
   let content = [
-		`已用 ${bytesToSize(used)}｜占比 ${proportion(used,total)}`];
+		`USED ${bytesToSize(used)}｜RATIO ${proportion(used,total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
-    content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
+    content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} 天     `+(resetDayLeft>=10?"":"   ")+`｜剩余 ${expireDaysLeft} 天`);
+      content.push(`RESET ${resetDayLeft} `+afterday+`｜EXPIRE ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -38,19 +38,18 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`🌼 ${formatTime(args.expire || info.expire)}`);
+      content.push(`DATE ${formatTime(args.expire || info.expire)} Serendipity`);
     }
   }
 
   let now = new Date();
   let hour = now.getHours();
   let minutes = now.getMinutes();
-	let seconds = now.getSeconds();
+		let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
-
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜${hour}:${minutes}:${seconds}`,
+    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon || "timelapse",
     "icon-color": args.color || "#16AAF4",
@@ -163,6 +162,7 @@ function bytesToSize(bytes) {
 function formatTime(time) {
   // 检查时间戳是否为秒单位，如果是，则转换为毫秒
   if (time < 1000000000000) time *= 1000;
-let date = new Date(time);
-return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
+  let date = new Date(time);
+	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
+	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
 }
