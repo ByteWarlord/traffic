@@ -51,8 +51,8 @@
   $done({
     title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
-    icon: args.icon || "timelapse",
-    "icon-color": args.color || "#16AAF4",
+    icon: "tag"||args.icon,
+    "icon-color": "#9370DB"||args.color,
   });
 })();
 
