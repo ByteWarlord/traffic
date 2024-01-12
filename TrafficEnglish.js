@@ -162,7 +162,7 @@ function bytesToSize(bytes) {
 function formatTime(time) {
   // 检查时间戳是否为秒单位，如果是，则转换为毫秒
   if (time < 1000000000000) time *= 1000;
-  let dateObj = new Date(time);
-	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(dateObj);
+  let date = new Date(time);
+	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
 	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
 }
