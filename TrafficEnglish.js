@@ -19,26 +19,26 @@
   let total = info.total;
 	
   let content = [
-		`USED ${bytesToSize(used)}｜RATIO ${proportion(used,total)}`];
+		`Traffic ${bytesToSize(used)}｜${bytesToSize(total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
     content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`RESET ${resetDayLeft} `+afterday+`｜EXPIRE ${expireDaysLeft} ${eday}`);
+      content.push(`Reset  ${resetDayLeft} `+afterday+`｜Expire ${expireDaysLeft} ${eday}`);
     } else if (resetDayLeft) {
-		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
+		content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
     } else if (expireDaysLeft) {
-     content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
+     content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
 			//content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
     }
 		
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`DATE ${formatTime(args.expire || info.expire)} Serendipity`);
+      content.push(`${formatTime(args.expire || info.expire)}`);
     }
   }
 
@@ -49,10 +49,10 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} - ${bytesToSize(total)}｜🌼 ${hour}:${minutes}:${seconds}`,
+    title:`${args.title} - ${proportion(used,total)}｜${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
-    icon: args.icon || "timelapse",
-    "icon-color": args.color || "#16AAF4",
+    icon: args.icon||"tag",
+    "icon-color": args.color||"#9370DB",
   });
 })();
 
