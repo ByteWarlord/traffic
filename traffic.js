@@ -19,7 +19,7 @@
   let total = info.total;
 	
   let content = [
-		`套餐 ${bytesToSize(used)}｜${bytesToSize(total)}`];
+		`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
