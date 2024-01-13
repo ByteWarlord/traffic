@@ -26,7 +26,7 @@
     content.push(`⏰ 不限时套餐       PER ${proportion(used,total)}`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} 天, 剩余 ${expireDaysLeft} 天`);
+      content.push(`重置 ${resetDayLeft} 天 , 剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 RESET ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
