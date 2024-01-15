@@ -13,13 +13,13 @@
   let resetDayLeft = getRemainingDays(parseInt(args["reset_day"]));
   let expireDaysLeft = getExpireDaysLeft(args.expire || info.expire);
   let afterday = args["reset_day"] < 2 ? "Day":"Days";
- let eday = expireDaysLeft<2?"Day":"Days";
- 
+	let eday = expireDaysLeft<2?"Day":"Days";
+	
   let used = info.download + info.upload;
   let total = info.total;
- 
+	
   let content = [
-  `${bytesToSize(used)}｜${bytesToSize(total)}｜${resetDayLeft} 天`];
+		`${bytesToSize(used)}｜${bytesToSize(total)}｜${resetDayLeft} 天`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
@@ -28,16 +28,16 @@
     if (resetDayLeft && expireDaysLeft) {
      // content.push(`重置 ${resetDayLeft} 天 ，套餐剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
-  content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
+		content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
     } else if (expireDaysLeft) {
      content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
-   //content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
+			//content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
     }
-  
+		
     // 到期时间（日期）显示
     if (expireDaysLeft) {
-   let expireDays = 
+			let expireDays = 
       content.push(`${formatTime(args.expire || info.expire)}｜${expireDaysLeft} 天`);
     }
   }
@@ -45,12 +45,12 @@
   let now = new Date();
   let hour = now.getHours();
   let minutes = now.getMinutes();
-  let seconds = now.getSeconds();
+		let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
     title:`${args.title} - ${proportion(used,total)}｜${hour}:${minutes}:${seconds}`,
-  content: content.join("\n"),
+		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
   });
@@ -66,7 +66,7 @@ function getArgs() {
 }
 
 function proportion(used, total){
- return (Math.round(used/total*10000)/100.00 + " %");
+	return (Math.round(used/total*10000)/100.00 + " %");
 }
 
 function getUserInfo(url) {
@@ -109,7 +109,7 @@ async function getDataInfo(url) {
 }
 
 function getRemainingDays(resetDay) {
-  if (!resetDay  resetDay < 1  resetDay > 31) return;
+  if (!resetDay || resetDay < 1 || resetDay > 31) return;
 
   let now = new Date();
   let today = now.getDate();
@@ -152,7 +152,7 @@ function getExpireDaysLeft(expire) {
 }
 
 function bytesToSize(bytes) {
-	if (bytes === 0) return "0B";
+  if (bytes === 0) return "0B";
   let k = 1024;
   let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -163,6 +163,6 @@ function formatTime(time) {
   // 检查时间戳是否为秒单位，如果是，则转换为毫秒
   if (time < 1000000000000) time *= 1000;
   let date = new Date(time);
- //return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
- return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'long',timeStyle:'medium'});
+	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
+	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'long',timeStyle:'medium'});
 }
