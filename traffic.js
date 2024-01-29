@@ -1,7 +1,7 @@
 /*
  * 由@hellokitty9988编写
- * 更新日期：2024.01.14 01:15
- * 版本：1.1
+ * 更新日期：2024.01.30 05:00
+ * 版本：1.2
 */
 (async () => {
   let args = getArgs();
@@ -49,7 +49,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title}｜${hour}:${minutes}:${seconds}`,
+    title:`${args.title}｜♻️${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
