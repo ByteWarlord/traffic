@@ -66,7 +66,7 @@ function getArgs() {
 }
 
 function proportion(used, total){
-	return (Math.round(used/total*10000)/10.00 + " %");
+	return (Math.round(used/total*10000)/100.00 + " %");
 }
 
 function getUserInfo(url) {
@@ -156,7 +156,7 @@ function bytesToSize(bytes) {
   let k = 1024;
   let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
+  return (bytes / Math.pow(k, i)).toFixed(3) + " " + sizes[i];
 }
 
 function formatTime(time) {
