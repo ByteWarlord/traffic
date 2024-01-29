@@ -49,7 +49,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} - ${proportion(used,total)}｜${hour}:${minutes}:${seconds}`,
+    title:`${args.title}｜${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
@@ -156,7 +156,7 @@ function bytesToSize(bytes) {
   let k = 1024;
   let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (bytes / Math.pow(k, i)).toFixed(2) + " " + sizes[i];
+  return (bytes / Math.pow(k, i)).toFixed(3) + " " + sizes[i];
 }
 
 function formatTime(time) {
