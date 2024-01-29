@@ -66,7 +66,7 @@ function getArgs() {
 }
 
 function proportion(used, total){
-	return (Math.round(used/total*10000)/100.00 + " %");
+	return (Math.round(used/total*10000)/10.00 + " %");
 }
 
 function getUserInfo(url) {
