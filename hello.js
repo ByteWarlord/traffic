@@ -33,7 +33,7 @@
     content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-    content.push(`还有${resetDayLeft}天重置，${expireDaysLeft}天到期`);
+    content.push(`重置 ${resetDayLeft}天|到期 ${expireDaysLeft}天`);
     } else if (resetDayLeft) {
     //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
       content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -163,7 +163,7 @@ function bytesToSize(bytes) {
   let k = 1024;
   let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (bytes / Math.pow(k, i)).toFixed(3) + " " + sizes[i];
+  return (bytes / Math.pow(k, i)).toFixed(3) + sizes[i];
 }
 
 function formatTime(time) {
