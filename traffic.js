@@ -1,7 +1,7 @@
 /*
  * 由@hellokitty9988编写
- * 更新日期：2024.01.30 05:00
- * 版本：1.2
+ * 更新日期：2024.01.31 17:36
+ * 版本：1.1
 */
 (async () => {
   let args = getArgs();
@@ -19,14 +19,14 @@
   let total = info.total;
 	
   let content = [
-		`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
+		`${bytesToSize(used)}／${bytesToSize(total)} 重置${resetDayLeft}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
     content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} 天，套餐剩余 ${expireDaysLeft} 天`);
+     // content.push(`重置 ${resetDayLeft} 天 ，到期 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
 		content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
       //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
@@ -38,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`${formatTime(args.expire || info.expire)}`);
+      content.push(`${formatTime(args.expire || info.expire)} 到期${expireDaysLeft}`);
     }
   }
 
@@ -49,7 +49,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title}｜${hour}:${minutes}:${seconds}`,
+    title:`${args.title} ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
@@ -164,5 +164,5 @@ function formatTime(time) {
   if (time < 1000000000000) time *= 1000;
   let date = new Date(time);
 	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
-	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
+	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'long',timeStyle:'medium'});
 }
