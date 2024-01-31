@@ -52,7 +52,7 @@
     title:`${args.title} ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
-    "icon-color": args.color||"#9370DB",
+    "icon-color": args.color||"#C23188",
   });
 })();
 
