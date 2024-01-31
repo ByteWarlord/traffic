@@ -1,13 +1,12 @@
 /*
  * 由@hellokitty9988编写
- * 更新日期：2024.01.30 16:00
+ * 更新日期：2024.01.31 05:00
  * 版本：1.2
 */
 (async () => {
   let args = getArgs();
   let info = await getDataInfo(args.url);
-	  console.log("aaaa");  console.log(args);
-  console.log("uuuu");
+  
   // 如果没有信息，则直接结束
   if (!info) return $done();
 
@@ -17,29 +16,23 @@
 	let eday = expireDaysLeft<2?"Day":"Days";
 	
   let used = info.download + info.upload;
-	let download = info.download;
-	let upload = info.upload;
   let total = info.total;
-	let unused = total-used;
 	
   let content = [
-		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
-`下载 ${bytesToSize(download)}｜上传 ${bytesToSize(upload)}
-未用 ${bytesToSize(unused)}｜总量 ${bytesToSize(total)}`];
-
+		`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
-    //let percentage = ((used / total) * 100).toFixed(1);
+    let percentage = ((used / total) * 100).toFixed(1);
     content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-    content.push(`重置 ${resetDayLeft}天|到期 ${expireDaysLeft}天`);
+      content.push(`重置 ${resetDayLeft} 天，套餐剩余 ${expireDaysLeft} 天`);
     } else if (resetDayLeft) {
-    //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
-      content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
+		content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
+      //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
     } else if (expireDaysLeft) {
-     //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
-			content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
+     content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
+			//content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
     }
 		
     // 到期时间（日期）显示
@@ -56,7 +49,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} ${hour}:${minutes}:${seconds}`,
+    title:`${args.title}｜${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
@@ -163,7 +156,7 @@ function bytesToSize(bytes) {
   let k = 1024;
   let sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   let i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (bytes / Math.pow(k, i)).toFixed(3) + sizes[i];
+  return (bytes / Math.pow(k, i)).toFixed(3) + " " + sizes[i];
 }
 
 function formatTime(time) {
@@ -171,5 +164,5 @@ function formatTime(time) {
   if (time < 1000000000000) time *= 1000;
   let date = new Date(time);
 	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
-	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'long',timeStyle:'medium'});
+	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
 }
