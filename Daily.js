@@ -19,7 +19,7 @@
   let total = info.total;
 	
   let content = [
-		`${bytesToSize(used)}｜${bytesToSize(total)}｜${resetDayLeft} 天`];
+		`${bytesToSize(used)}｜${bytesToSize(total)}｜${resetDayLeft}`];
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
     let percentage = ((used / total) * 100).toFixed(1);
@@ -38,7 +38,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`${formatTime(args.expire || info.expire)}｜${expireDaysLeft} 天`);
+      content.push(`${formatTime(args.expire || info.expire)}｜${expireDaysLeft}`);
     }
   }
 
@@ -49,7 +49,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title}｜${hour}:${minutes}:${seconds}`,
+    title:`${args.title} ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
