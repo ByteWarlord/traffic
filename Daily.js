@@ -50,7 +50,7 @@
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} ${day1}日${hour}:${minutes}:${seconds}`,
+    title:`${args.title} ${hour}:${minutes}:${seconds}`,
     content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#A86756",
