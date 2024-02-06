@@ -43,6 +43,7 @@
   }
 
   let now = new Date();
+	console.log(now);
   let hour = now.getHours();
   let minutes = now.getMinutes();
 		let seconds = now.getSeconds();
