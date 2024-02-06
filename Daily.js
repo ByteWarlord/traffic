@@ -43,17 +43,17 @@
   }
 
   let now = new Date();
-	console.log(now);
+  let day1 = now.getDate();
   let hour = now.getHours();
   let minutes = now.getMinutes();
 		let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title} ${hour}:${minutes}:${seconds}`,
-		content: content.join("\n"),
+    title:`${args.title} ${day1}日${hour}:${minutes}:${seconds}`,
+    content: content.join("\n"),
     icon: args.icon||"tag",
-    "icon-color": args.color||"#9370DB",
+    "icon-color": args.color||"#A86756",
   });
 })();
 
