@@ -25,8 +25,7 @@
 	
   let content = [
 		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
-`下载 ${bytesToSize(download)}｜上传 ${bytesToSize(upload)}
-未用 ${bytesToSize(unused)}｜总量 ${bytesToSize(total)}`];
+`未用 ${bytesToSize(unused)}｜总量 ${bytesToSize(total)}`];
 
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
@@ -36,11 +35,9 @@
     if (resetDayLeft && expireDaysLeft) {
     content.push(`还有${resetDayLeft}天重置，${expireDaysLeft}天到期`);
     } else if (resetDayLeft) {
-    //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
       content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
     } else if (expireDaysLeft) {
-     //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
-			content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
+content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
     }
 		
     // 到期时间（日期）显示
