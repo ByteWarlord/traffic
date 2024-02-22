@@ -1,12 +1,14 @@
 /*
  * 由@hellokitty9988编写
- * 更新日期：2024.01.31 05:00
- * 版本：1.2
+ * 更新日期：2024.02.2 22:30
+ * 版本：1.3
 */
 (async () => {
   let args = getArgs();
   let info = await getDataInfo(args.url);
-  
+	
+	console.log(info)
+	console.log("ijijshshshsh")
   // 如果没有信息，则直接结束
   if (!info) return $done();
 
@@ -16,23 +18,28 @@
 	let eday = expireDaysLeft<2?"Day":"Days";
 	
   let used = info.download + info.upload;
+	let download = info.download;
+	let upload = info.upload;
   let total = info.total;
+	let unused = total-used;
 	
   let content = [
-		`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
+		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
+`套餐： ${bytesToSize(used)}｜${bytesToSize(total)}`];
+
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
-    let percentage = ((used / total) * 100).toFixed(1);
+    //let percentage = ((used / total) * 100).toFixed(1);
     content.push(`⏰ 不限时套餐`);
   } else {
     if (resetDayLeft && expireDaysLeft) {
-      content.push(`重置 ${resetDayLeft} 天，套餐剩余 ${expireDaysLeft} 天`);
+    content.push(`还有${resetDayLeft}天重置，${expireDaysLeft}天到期`);
     } else if (resetDayLeft) {
-		content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
-      //content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
+    //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
+      content.push(`提醒：套餐将在${resetDayLeft}天后重置`);
     } else if (expireDaysLeft) {
-     content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
-			//content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
+     //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
+			content.push(`提醒：套餐将在${expireDaysLeft}天后到期`);
     }
 		
     // 到期时间（日期）显示
@@ -43,13 +50,14 @@
   }
 
   let now = new Date();
+	console.log(now.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'long',timeStyle:'medium'}));
   let hour = now.getHours();
   let minutes = now.getMinutes();
 		let seconds = now.getSeconds();
   hour = hour > 9 ? hour : "0" + hour;
   minutes = minutes > 9 ? minutes : "0" + minutes;
   $done({
-    title:`${args.title}｜${hour}:${minutes}:${seconds}`,
+    title:`${args.title} ${hour}:${minutes}:${seconds}`,
 		content: content.join("\n"),
     icon: args.icon||"tag",
     "icon-color": args.color||"#9370DB",
@@ -99,7 +107,6 @@ async function getDataInfo(url) {
     console.log(err);
     return;
   }
-
   return Object.fromEntries(
     data
       .match(/\w+=[\d.eE+-]+/g)
@@ -164,5 +171,5 @@ function formatTime(time) {
   if (time < 1000000000000) time *= 1000;
   let date = new Date(time);
 	//return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(date);
-	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'full',timeStyle:'medium'});
+	return date.toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai',dateStyle:'long',timeStyle:'medium'});
 }
