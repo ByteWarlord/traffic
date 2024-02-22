@@ -25,7 +25,7 @@
 	
   let content = [
 		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
-`套餐： ${bytesToSize(used)}｜${bytesToSize(total)}`];
+`已用 ${bytesToSize(used)}|总量 ${bytesToSize(total)}`];
 
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
