@@ -26,8 +26,7 @@
   let content = [
 		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
 // `流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
-	  `
-   上传流量：${bytesToSize(upload)}
+	  `上传流量：${bytesToSize(upload)}
    下载流量：${bytesToSize(download)}
    剩余流量：${bytesToSize(unused)}
    流量套餐：${bytesToSize(total)}`];
@@ -40,10 +39,7 @@
     if (resetDayLeft && expireDaysLeft) {
     // content.push(`还有${resetDayLeft}天重置，${expireDaysLeft}天到期`);
 	        content.push(
-			`
-   重置天数：${resetDayLeft}
-   到期天数：${expireDaysLeft}
-   `
+			`重置|到期：${resetDayLeft}|${expireDaysLeft} 天`
 		);
     } else if (resetDayLeft) {
     //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
@@ -56,7 +52,7 @@
     // 到期时间（日期）显示
     if (expireDaysLeft) {
 			let expireDays = 
-      content.push(`到期时间：${formatTime(args.expire || info.expire)}`);
+      content.push(`${formatTime(args.expire || info.expire)}`);
     }
   }
 
