@@ -39,7 +39,7 @@
     if (resetDayLeft && expireDaysLeft) {
     // content.push(`还有${resetDayLeft}天重置，${expireDaysLeft}天到期`);
 	        content.push(
-			`重置|到期：${resetDayLeft}|${expireDaysLeft} 天`
+			`重置|到期：${resetDayLeft} | ${expireDaysLeft} 天`
 		);
     } else if (resetDayLeft) {
     //content.push(`PER    ${proportion(used,total)}  🌸 Reset ${resetDayLeft} `+afterday);
