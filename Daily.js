@@ -1,7 +1,7 @@
 /*
  * 由@hellokitty9988编写
- * 更新日期：2024.02.2 22:30
- * 版本：1.3
+ * 更新日期：2024.08.13 15:44
+ * 版本：1.4
 */
 (async () => {
   let args = getArgs();
@@ -25,7 +25,9 @@
 	
   let content = [
 		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
-`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
+// `流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
+	  `上传流量：${bytesToSize(upload)}
+   下载流量：${bytesToSize(download)}`];
 
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
