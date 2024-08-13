@@ -27,9 +27,9 @@
 		//`流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
 // `流量 ${bytesToSize(used)}｜${bytesToSize(total)}`];
 	  `上传流量：${bytesToSize(upload)}
-   下载流量：${bytesToSize(download)}
-   剩余流量：${bytesToSize(unused)}
-   流量套餐：${bytesToSize(total)}`];
+下载流量：${bytesToSize(download)}
+剩余流量：${bytesToSize(unused)}
+流量套餐：${bytesToSize(total)}`];
 
   // 判断是否为不限时套餐
   if (!resetDayLeft && !expireDaysLeft) {
